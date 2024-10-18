@@ -1,9 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Partite di Padel</title>
+    <title>Partite di Padel</title>
 </head>
 <body>
-  <h1>Benvenuto nel Sito delle Partite di Padel</h1>
+    <h1>Benvenuto nel Sito delle Partite di Padel</h1>
+    <form id="nameForm">
+        <label for="name">Inserisci il tuo nome:</label>
+        <input type="text" id="name" name="name">
+        <input type="submit" value="Salva">
+    </form>
+    <p id="greeting"></p>
+
+    <script>
+        document.getElementById('nameForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var name = document.getElementById('name').value;
+            localStorage.setItem('username', name);
+            displayGreeting();
+        });
+
+        function displayGreeting() {
+            var savedName = localStorage.getItem('username');
+            if (savedName) {
+                document.getElementById('greeting').textContent = 'Ciao, ' + savedName + '!';
+            }
+        }
+
+        // Mostra un saluto se il nome è già stato salvato in precedenza
+        displayGreeting();
+    </script>
 </body>
 </html>
