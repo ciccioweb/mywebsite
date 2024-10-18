@@ -8,28 +8,28 @@
     <form id="nameForm">
         <label for="name">Inserisci il tuo nome:</label>
         <input type="text" id="name" name="name">
-        <input type="button" value="Salva" onclick="saveName()">
+        <input type="submit" value="Salva">
     </form>
     <p id="greeting"></p>
 
     <script>
-        function saveName() {
+        document.getElementById('nameForm').addEventListener('submit', function(event) {
+            event.preventDefault();
             var name = document.getElementById('name').value;
-            // Usa un comando per aggiungere il nome al file di testo
-            fetch('/save-name', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({name: name})
-            }).then(response => {
-                if (response.ok) {
-                    document.getElementById('greeting').textContent = 'Ciao, ' + name + '!';
-                } else {
-                    console.error('Errore nel salvataggio del nome.');
-                }
-            });
+            localStorage.setItem('username', name);
+            displayGreeting();
+        });
+
+        function displayGreeting() {
+            var savedName = localStorage.getItem('username');
+            if (savedName) {
+                document.getElementById('greeting').textContent = 'Ciao, ' + savedName + '!';
+            }
         }
+
+        // Mostra un saluto se il nome è già stato salvato in precedenza
+        displayGreeting();
     </script>
 </body>
 </html>
+
